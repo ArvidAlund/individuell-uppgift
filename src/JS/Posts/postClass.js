@@ -1,5 +1,5 @@
 import LikeDislike from "./likeDislike.js"
-import OpenCommentSection from "../CommentSection/OpenCommentSection.js"
+import OpenCommentSection from "../CommentSection/openCommentSection.js"
 
 
 export class POST{
@@ -47,52 +47,51 @@ export class POST{
         iconWrapper.classList.add("iconWrapper")
 
         // Array med sökvägar till de ikoner vi vill använda: gilla, ogilla och kommentarer
-        const iconArray = ["/public/icons/thumbs_up.svg", "/public/icons/thumbs_down.svg", "/public/icons/chat.svg"]
+        const rootpath = "/public/icons/"
+        const iconArray = ["thumbs_up.svg", "thumbs_down.svg", "chat.svg"]
 
         // Loopa igenom varje ikon
-        for (let i = 0; i < iconArray.length; i++) {
-            const iconPath = iconArray[i];
-
-            // Hämta SVG-filen via fetch
-            fetch(iconPath)
+        Promise.all(iconArray.map((icon, i) =>
+            fetch(rootpath + icon)
                 .then(res => res.text())
-                .then(svgText => {
-                    // Skapa en div för varje ikon
-                    const iconDiv = document.createElement("div");
-                    iconDiv.classList.add("icon");
-                    iconDiv.dataset.id = this.id
-                    if(i == 2){
+                .then(svgText => ({ svgText, index: i }))
+        )).then(results => {
+            results.sort((a, b) => a.index - b.index);
+            results.forEach(({ svgText, index }) => {
+                const iconDiv = document.createElement("div");
+                iconDiv.classList.add("icon");
+                iconDiv.dataset.id = this.id;
+                if(index == 2){
                         iconDiv.dataset.open = false
                     }
-                    iconDiv.dataset.index = i
-                    iconDiv.innerHTML = svgText;
+                iconDiv.dataset.index = index;
+                iconDiv.innerHTML = svgText;
 
-                    
-                    iconDiv.querySelector("path").setAttribute("fill", "currentColor");
+                iconDiv.querySelectorAll("path").forEach(path => {
+                    if (!path.getAttribute("d")?.includes("M0 0h48v48H0z")) {
+                        path.setAttribute("fill", "currentColor");
+                    }
+                });
 
-                    iconWrapper.appendChild(iconDiv);
-                    
-                    // Lyssna efter klick på like/dislike/kommentarer
-                    iconDiv.addEventListener("click", () => {
+                iconWrapper.appendChild(iconDiv);
+
+                iconDiv.addEventListener("click", () => {
                         // Om det är gilla eller ogilla
-                        if (i < 2) LikeDislike(iconDiv);
+                        if (index < 2) LikeDislike(iconDiv);
 
-                        if (i == 2) {
+                        if (index == 2) {
                             // Växla öppet/stängt state
                             iconDiv.dataset.open = iconDiv.dataset.open === "true" ? "false" : "true";
 
                             // öppna eller stäng kommentarsfält
                             if (iconDiv.dataset.open == "true"){
-                                iconDiv.style.background = "var(--color-bg-alt)"
                                 OpenCommentSection(this.id, true)
                             } else{
-                                iconDiv.style.background = ""
                                 OpenCommentSection(this.id, false)
                             }
-                        }
-                    });
-                });
-        }
+                        }});
+            });
+        });
 
         bottomWrapper.appendChild(iconWrapper);
 

@@ -1,5 +1,4 @@
 export default function LikeDislike(item){
-
     //Hämta alla ikoner från samma post
     const otherIcons = document.querySelectorAll(`[data-id="${item.dataset.id}"]`);
 
