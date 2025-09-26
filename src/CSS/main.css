@@ -1,0 +1,196 @@
+@import "header.css";
+@import "post.css";
+@import "createPost.css";
+@import "comments.css";
+
+:root {
+    /* ===========================
+        Färger
+      ============================ */
+        --color-bg: #fafafa;
+        --color-bg-alt: #f2f2f2;
+        --color-surface: #ffffff;
+    
+        --color-text: #1a1a1a;
+        --color-text-muted: #555555;
+        --color-border: #e0e0e0;
+    
+        --color-primary: #2563eb;
+        /* blå */
+        --color-primary-hover: #1d4ed8;
+        --color-secondary: #f97316;
+        /* orange */
+        --color-secondary-hover: #ea580c;
+        --color-accent: #22c55e;
+        /* grön highlight */
+    
+        --color-link: var(--color-primary);
+        --color-link-hover: var(--color-primary-hover);
+    
+        --color-danger: #dc2626;
+        --color-success: #16a34a;
+        --color-warning: #facc15;
+
+
+    /* ===========================
+        Typografi (fluid med clamp)
+      ============================ */
+
+    --font-size-xs: clamp(0.75rem, 1vw, 0.875rem); /* 12–14px */
+
+    --font-size-sm: clamp(0.875rem, 1vw, 1rem); /* 14–16px */
+
+    --font-size-base: clamp(1rem, 1.2vw, 1.125rem); /* 16–18px */
+
+    /* Rubriker (Perfect Fourth ~1.333) */
+    --font-size-h6: clamp(1.125rem, 2vw, 1.313rem); /* 18–21px */
+
+    --font-size-h5: clamp(1.5rem, 3vw, 1.75rem); /* 24–28px */
+
+    --font-size-h4: clamp(2rem, 4vw, 2.313rem); /* 32–37px */
+
+    --font-size-h3: clamp(2.5rem, 5vw, 3.063rem); /* 40–49px */
+
+    --font-size-h2: clamp(3.5rem, 6vw, 4.063rem); /* 56–65px */
+
+    --font-size-h1: clamp(4.5rem, 8vw, 5.438rem); /* 72–87px */
+
+    /* Line-height */
+    --line-height-body: 1.6;
+    --line-height-heading: 1.2;
+
+    --font-family-playfair: 'Playfair Display',
+        serif;
+    
+    --font-family-inter: 'Inter',
+        sans-serif;
+
+    /* ===========================
+        Spacing (fluid)
+      ============================ */
+    --space-xs: clamp(0.25rem, 0.5vw, 0.5rem); /* 4–8px */
+
+    --space-sm: clamp(0.5rem, 1vw, 1rem); /* 8–16px */
+
+    --space-md: clamp(1rem, 2vw, 2rem); /* 16–32px */
+
+    --space-lg: clamp(2rem, 4vw, 4rem); /* 32–64px */
+
+    --space-xl: clamp(4rem, 6vw, 6rem); /* 64–96px */
+
+    /* ===========================
+        Layout
+      ============================ */
+        --container-max-width: 70ch;
+        --radius-sm: 6px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+    
+    /* ===========================
+        Skuggor
+      ============================ */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.2);
+}
+@media (prefers-color-scheme: dark){
+    :root {
+            --color-bg: #121212;
+            --color-bg-alt: #1e1e1e;
+            --color-surface: #242424;
+    
+            --color-text: #f5f5f5;
+            --color-text-muted: #aaaaaa;
+            --color-border: #333333;
+    
+            --color-primary: #3b82f6;
+            --color-primary-hover: #2563eb;
+            --color-secondary: #fb923c;
+            --color-secondary-hover: #f97316;
+            --color-accent: #4ade80;
+    
+            --color-danger: #ef4444;
+            --color-success: #22c55e;
+            --color-warning: #eab308;
+    
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.55);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
+        }
+}
+
+*, ::before, ::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family-inter);
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: var(--font-family-playfair);
+    line-height: var(--line-height-heading);
+    margin-bottom: var(--space-sm);
+}
+
+body{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+header{
+    grid-column: 1 / -1;
+}
+
+main{
+    grid-column: 1/-1;
+    padding: var(--space-md)
+}
+
+h1 {
+    font-size: var(--font-size-h1);
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+}
+
+h3 {
+    font-size: var(--font-size-h3);
+}
+
+h4 {
+    font-size: var(--font-size-h4);
+}
+
+h5 {
+    font-size: var(--font-size-h5);
+}
+
+h6 {
+    font-size: var(--font-size-h6);
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-link-hover);
+}
+
+@media (max-width: 1024px) {
+    main{
+        grid-column: 1/-1;
+    }
+
+    aside{
+        display: none;
+    }
+}
